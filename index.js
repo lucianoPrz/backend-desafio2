@@ -31,11 +31,14 @@ const env = async () => {
     // let productos = await manager.addProduct(producto)
     // console.log(productos)
 
-    let updateProductos = await manager.updateProduct(2, otroProducto)
-    console.log(updateProductos)
+    // let updateProductos = await manager.updateProduct(2, otroProducto)
+    // console.log(updateProductos)
 
     // let segundaConcultaId = await manager.getProductById(1)
     // console.log(`El producto consulta es ${segundaConcultaId.title}`)
+
+    let consultaEliminarProducto = await manager.deleteProduct(4)
+    console.log(consultaEliminarProducto)
 };
 
 env();

@@ -72,6 +72,7 @@ export default class ProductManager {
         if(products.length === 0 || !productoExistente) {
            return 'No existe producto asociado a ese id.'
         } else {
+            // se actualiza los campos del objeto
             products[productId-1].title = product.title,
             products[productId-1].description = product.description,
             products[productId-1].price = product.price,
@@ -80,20 +81,23 @@ export default class ProductManager {
             products[productId-1].stock = product.stock
         }
 
-
-        // nuevo array sin el producto con ese id
-        // let productsNuevo = products.filter(product => product.id !== productId)
-
-
-
-        // product.id = productId
-        // productsNuevo.splice()
-
-        // ordeno nuevo array por id
-        // productsNuevo = productsNuevo.sort((a,b) => a - b)
-
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
 
         return products;
+    }
+
+    deleteProduct = async (productId) => {
+        const products = await this.getProducts()
+        const productoExistente = products.find(product => product.id === productId);
+
+        if(products.length === 0 || !productoExistente) {
+            return `No existe producto con el id ${productId}`
+        }
+
+        let productFiltrados = products.filter(product => product.id !== productId)
+
+        await fs.promises.writeFile(this.path, JSON.stringify(productFiltrados, null, '\t'))
+
+        return productFiltrados;
     }
 }
