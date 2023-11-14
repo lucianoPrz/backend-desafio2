@@ -1,0 +1,57 @@
+import fs from 'fs';
+
+export default class ProductManager {
+    constructor(path) {
+        this.path = path;
+    }
+
+    // retorna todos los productos registrados
+    getProducts = async () => {
+        if (fs.existsSync(this.path)){
+            const data = await fs.promises.readFile(this.path, 'utf-8')
+            const products = JSON.parse(data)
+            return products
+        } else {
+            return []
+        }
+    }
+
+    //retorna un producto por el id
+    getProductById = async (idProduct) => {
+
+        //traigo los productos del file
+        const products = await this.getProducts();
+        
+        //cónsulta si el prod existe
+        const productoExistente = products.find(product => product.id === idProduct)
+        if (productoExistente) {
+            return productoExistente
+        } else {
+            return "Not found";
+        }
+    }
+
+    // agrega un nuevo producto a this.products
+    addProduct = async (product) => {
+
+        // valida que todos los campos requeridos tengan datos
+        if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
+            return "Todos los datos son obligatorios"
+        }
+        
+        const products = await this.getProducts();
+
+
+        if(products.length === 0) {
+            product.id=1;
+        } else {
+            product.id = products[products.length-1].id+1;
+        }
+
+
+        products.push(product);
+        await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
+
+        return products;
+    }
+}
