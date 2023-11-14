@@ -19,8 +19,23 @@ const env = async () => {
         stock : 50
     }
 
-    let productos = await manager.addProduct(producto)
-    console.log(productos)
+    let otroProducto = {
+        title : 'mouse',
+        description : 'mouse inalambrico',
+        price : 8000,
+        thumbnail : '#',
+        code : '324565',
+        stock : 100
+    }
+
+    // let productos = await manager.addProduct(producto)
+    // console.log(productos)
+
+    let updateProductos = await manager.updateProduct(2, otroProducto)
+    console.log(updateProductos)
+
+    // let segundaConcultaId = await manager.getProductById(1)
+    // console.log(`El producto consulta es ${segundaConcultaId.title}`)
 };
 
 env();

@@ -9,12 +9,12 @@
 		"id": 1
 	},
 	{
-		"title": "auriculares",
-		"description": "auriculares Bluetooth",
-		"price": 15000,
+		"title": "mouse",
+		"description": "mouse inalambrico",
+		"price": 8000,
 		"thumbnail": "#",
-		"code": "324568",
-		"stock": 50,
+		"code": "324565",
+		"stock": 100,
 		"id": 2
 	},
 	{

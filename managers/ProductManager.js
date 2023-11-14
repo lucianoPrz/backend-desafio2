@@ -54,4 +54,46 @@ export default class ProductManager {
 
         return products;
     }
+
+    updateProduct = async (productId, product) => {
+
+        // valida que todos los campos requeridos tengan datos
+        if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
+            return "Todos los datos son obligatorios"
+        }
+        
+        // trae un array con los productos del archivo file
+        const products = await this.getProducts();
+
+        // valida si existe un prod con ese id
+        const productoExistente = products.find(product => product.id === productId);
+        
+        // Si el archivo esta vacio o no existe prod con ese id
+        if(products.length === 0 || !productoExistente) {
+           return 'No existe producto asociado a ese id.'
+        } else {
+            products[productId-1].title = product.title,
+            products[productId-1].description = product.description,
+            products[productId-1].price = product.price,
+            products[productId-1].thumbnail = product.thumbnail,
+            products[productId-1].code = product.code,
+            products[productId-1].stock = product.stock
+        }
+
+
+        // nuevo array sin el producto con ese id
+        // let productsNuevo = products.filter(product => product.id !== productId)
+
+
+
+        // product.id = productId
+        // productsNuevo.splice()
+
+        // ordeno nuevo array por id
+        // productsNuevo = productsNuevo.sort((a,b) => a - b)
+
+        await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
+
+        return products;
+    }
 }
